@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
+from django.utils import timezone
 
 class SimpleUserManager(BaseUserManager):
     def create_user(self, username, password=None):
@@ -17,6 +18,7 @@ class SimpleUserManager(BaseUserManager):
         return user
 
 class SimpleUser(AbstractBaseUser):
+    last_password_change = models.DateTimeField(default=timezone.now)
     username = models.CharField(max_length=150, unique=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
